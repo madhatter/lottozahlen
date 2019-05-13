@@ -15,18 +15,27 @@ func contains(s []int, e int) bool {
 	return false
 }
 
-func main() {
+func generateNumbers(n int, l int) []int {
 	var winningNumbers []int
 
 	s1 := rand.NewSource(time.Now().UnixNano())
 	r1 := rand.New(s1)
 
-	for len(winningNumbers) < 5 {
+	for len(winningNumbers) < n {
 		num := 0
 		for num == 0 && !contains(winningNumbers, num) {
-			num = r1.Intn(50)
+			num = r1.Intn(l)
 			winningNumbers = append(winningNumbers, num)
 		}
 	}
-	fmt.Println(winningNumbers)
+
+	return winningNumbers
+}
+
+func main() {
+	for i := 1; i < 5; i++ {
+		fiveNumbers := generateNumbers(5, 50)
+		twoNumbers := generateNumbers(2, 10)
+		fmt.Println(fiveNumbers, twoNumbers)
+	}
 }
