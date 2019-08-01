@@ -3,39 +3,42 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"os"
+	"strconv"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
-func contains(s []int, e int) bool {
-	for _, a := range s {
-		if a == e {
-			return true
-		}
-	}
-	return false
-}
-
 func generateNumbers(n int, l int) []int {
-	var winningNumbers []int
+	winningNumbers := make([]int, n)
+	usedNumbers := make(map[int]struct{})
 
 	s1 := rand.NewSource(time.Now().UnixNano())
 	r1 := rand.New(s1)
 
-	for len(winningNumbers) < n {
-		num := 0
-		for num == 0 && !contains(winningNumbers, num) {
+	//for len(winningNumbers) < n {
+	for i := range winningNumbers {
+		var num int
+		for {
 			num = r1.Intn(l)
-			winningNumbers = append(winningNumbers, num)
+
+			if _, ok := usedNumbers[num]; !ok {
+				break
+			}
 		}
+		usedNumbers[num] = struct{}{}
+		winningNumbers[i] = num
 	}
 
 	return winningNumbers
 }
 
 func main() {
-	for i := 1; i < 5; i++ {
-		fiveNumbers := generateNumbers(5, 50)
-		twoNumbers := generateNumbers(2, 10)
-		fmt.Println(fiveNumbers, twoNumbers)
+	arg, _ := strconv.Atoi(os.Args[1])
+	log.SetFormatter(&log.JSONFormatter{})
+	fmt.Printf("Set of %v.\n", arg)
+	for i := 1; i < arg+1; i++ {
+		fmt.Println(generateNumbers(5, 50))
 	}
 }
