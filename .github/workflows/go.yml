@@ -1,5 +1,4 @@
 name: Lottozahlen
-uses: actions/upload-artifact@v1.0.0
 on: [push]
 jobs:
 
