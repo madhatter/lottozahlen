@@ -27,6 +27,20 @@ func generateNumbers(n int, l int) []int {
 	return numbrs[0:n]
 }
 
+func generateNumbersString(n int, l int) string {
+	numbrs := generateNumbers(n, l)
+	var txt string
+
+	for i := 0; i < n; i++ {
+		if i == 0 {
+			txt = strconv.Itoa(numbrs[i])
+		} else {
+			txt = txt + " " + strconv.Itoa(numbrs[i])
+		}
+	}
+	return txt
+}
+
 func main() {
 	arg, _ := strconv.Atoi(os.Args[1])
 	log.SetFormatter(&log.JSONFormatter{})
@@ -34,6 +48,6 @@ func main() {
 
 	fmt.Printf("Set of %v.\n", arg)
 	for i := 1; i < arg+1; i++ {
-		fmt.Println(generateNumbers(5, 50))
+		fmt.Println(generateNumbersString(5, 50) + " | " + generateNumbersString(2, 10))
 	}
 }
