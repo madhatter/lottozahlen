@@ -22,6 +22,7 @@ func createSlice(max int) []int {
 
 func generateNumbers(n int, l int) []int {
 	numbrs := createSlice(l)
+	rand.Seed(time.Now().UnixNano())
 	rand.Shuffle(len(numbrs), func(i, j int) { numbrs[i], numbrs[j] = numbrs[j], numbrs[i] })
 
 	return numbrs[0:n]
